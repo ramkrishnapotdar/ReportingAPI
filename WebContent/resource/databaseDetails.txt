@@ -1,0 +1,3 @@
+URL jdbc:h2:tcp:<IP>:<PORT>/<DBNAME>;AUTO_SERVER=TRUE;MODE=Oracle
+username <UNAME>
+password <PASS>

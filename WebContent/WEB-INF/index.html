@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="javascript/ag-grid-enterprise.min.noStyle.js"></script>
+  <link rel="stylesheet" href="styles/ag-grid.css">
+  <link rel="stylesheet" href="styles/ag-theme-alpine.css">
+</head>
+<body>
+  <h4>Status of PRD Environments!</h4>
+  
+  
+<table style="border-collapse: collapse; width: 100%;" border="1">
+<tbody>
+<tr>
+<td colspan="2" style="width: 50%;">API Details</td>
+
+</tr>
+<tr>
+<td colspan ="2" style="width: 50%;"><div id="apiGrid" style="height: 200px;width:650px;" class="ag-theme-alpine"></div></td>
+
+</tr>
+<tr>
+<td style="width: 50%;">Database Instances</td>
+<td style="width: 50%;">ICABI Instances</td>
+</tr>
+<tr>
+<td style="width: 50%;"> <div id="dbGrid" style="height: 300px;width:650px;" class="ag-theme-alpine"></div> </td>
+<td style="width: 50%;"><div id="prdGrid" style="height: 300px;width:650px;" class="ag-theme-alpine"></div></td>
+</tr>
+</tbody>
+</table>
+  
+
+	<script type="text/javascript" charset="utf-8">
+      
+       const columnDefs2 = [
+           { field: "STATUS", rowGroup: true },
+           { field: "TSTAMP" }
+       ];
+       
+       const autoGroupColumnDef2 = {
+           headerName: "Name",
+           field: "NAME",
+           cellRenderer:'agGroupCellRenderer',
+          
+       }
+       
+       // let the grid know which columns and what data to use
+       const gridOptions2 = {
+           columnDefs: columnDefs2,
+           autoGroupColumnDef: autoGroupColumnDef2,
+           groupSelectsChildren: true,
+           rowSelection: 'multiple'
+       };
+       const apiGridDiv = document.querySelector('#apiGrid');
+      
+             
+       new agGrid.Grid(apiGridDiv, gridOptions2);
+       agGrid.simpleHttpRequest({url: 'http://10.53.105.163:1531/ReportingAPI/rest/ReadDataBaseStatus/APIStatus.json'})
+           .then(data2 => {
+              gridOptions2.api.setRowData(data2);
+           });
+    	
+  </script>
+
+  <script type="text/javascript" charset="utf-8">
+       // specify the columns
+       const columnDefs = [
+           { field: "STATUS", rowGroup: true },
+           { field: "TSTAMP" }
+       ];
+       
+       const autoGroupColumnDef = {
+           headerName: "Name",
+           field: "NAME",
+           cellRenderer:'agGroupCellRenderer',
+          
+       }
+       
+       // let the grid know which columns and what data to use
+       const gridOptions = {
+           columnDefs: columnDefs,
+           autoGroupColumnDef: autoGroupColumnDef,
+           groupSelectsChildren: true,
+           rowSelection: 'multiple'
+       };
+       
+     
+       
+       // lookup the container we want the Grid to use
+       const eGridDiv = document.querySelector('#dbGrid');
+       
+       new agGrid.Grid(eGridDiv, gridOptions);
+       agGrid.simpleHttpRequest({url: 'http://10.53.105.163:1531/ReportingAPI/rest/ReadDataBaseStatus/dbStatus.json'})
+           .then(data => {
+              gridOptions.api.setRowData(data);
+           });
+     </script>
+  <script type="text/javascript" charset="utf-8">
+       // specify the columns
+      
+       const columnDefs1 = [
+           { field: "STATUS", rowGroup: true },
+           { field: "TSTAMP" }
+       ];
+       
+       const autoGroupColumnDef1 = {
+           headerName: "Name",
+           field: "NAME",
+           cellRenderer:'agGroupCellRenderer',
+          
+       }
+       
+       // let the grid know which columns and what data to use
+       const gridOptions1 = {
+           columnDefs: columnDefs1,
+           autoGroupColumnDef: autoGroupColumnDef1,
+           groupSelectsChildren: true,
+           rowSelection: 'multiple'
+       };
+       
+     
+       
+       // lookup the container we want the Grid to use
+       
+       const prdGridDiv = document.querySelector('#prdGrid');
+      
+             
+       new agGrid.Grid(prdGridDiv, gridOptions1);
+       agGrid.simpleHttpRequest({url: 'http://10.53.105.163:1531/ReportingAPI/rest/ReadDataBaseStatus/PRDStatus.json'})
+           .then(data1 => {
+              gridOptions1.api.setRowData(data1);
+           });
+    	
+  </script>
+  
+</body>
+</html>
